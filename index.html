@@ -429,17 +429,89 @@
     }
 
     /* ─── MOBILE ─── */
-    @media (max-width: 700px) {
-      .wrapper { padding-left: 16px; padding-right: 16px; }
-      .container { grid-template-columns: repeat(2, 1fr); gap: 14px; }
-      .nav a { font-size: 0.6rem; padding: 5px 10px; letter-spacing: 0.12em; }
-      .section-title { font-size: 1.1rem; }
-      .cd-num { font-size: 1.25rem; }
-      .cd-block { min-width: 52px; padding: 10px 12px 7px; }
+
+    /* Prevent blank page if JS is slow — reveal elements after a short delay */
+    @keyframes fadeInFallback {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
     }
+    .reveal {
+      animation: fadeInFallback 0.8s ease 0.3s both;
+    }
+    .reveal.visible {
+      animation: none;
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Tablet */
+    @media (max-width: 700px) {
+      :root { --nav-h: 48px; }
+
+      /* Nav — scrollable row */
+      .nav {
+        gap: 2px;
+        padding: 0 12px;
+        overflow-x: auto;
+        justify-content: flex-start;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+      }
+      .nav::-webkit-scrollbar { display: none; }
+      .nav a {
+        font-size: 0.62rem;
+        padding: 6px 12px;
+        letter-spacing: 0.1em;
+        white-space: nowrap;
+        flex-shrink: 0;
+      }
+      .nav-dot { flex-shrink: 0; }
+
+      /* Hero */
+      .wrapper { padding-left: 16px; padding-right: 16px; gap: 28px; }
+      .header img { width: 260px; }
+      .hero-subtitle { font-size: 0.85rem; letter-spacing: 0.22em; }
+      .hero-college  { font-size: 0.7rem; }
+
+      /* Countdown */
+      .countdown { gap: 10px; }
+      .cd-block { min-width: 60px; padding: 10px 14px 8px; border-radius: 8px; }
+      .cd-num  { font-size: 1.4rem; }
+      .cd-unit { font-size: 0.55rem; }
+
+      /* Section titles */
+      .section-title { font-size: 1.1rem; letter-spacing: 0.12em; }
+      .section-sub   { font-size: 0.7rem; }
+
+      /* Event grid — 2 cols */
+      .container { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+      .event { border-radius: 10px; }
+
+      /* Footer */
+      .footer { gap: 10px; }
+      .footer-logo { font-size: 0.85rem; }
+      .footer-links { gap: 14px; }
+      .footer-links a { font-size: 0.6rem; }
+    }
+
+    /* Small phones */
     @media (max-width: 420px) {
-      .container { grid-template-columns: 1fr; }
-      .countdown { gap: 8px; }
+      .wrapper { gap: 22px; }
+      .header img { width: 200px; }
+      .hero-subtitle { font-size: 0.75rem; }
+
+      /* Countdown — compact */
+      .countdown { gap: 7px; }
+      .cd-block { min-width: 54px; padding: 9px 10px 7px; }
+      .cd-num  { font-size: 1.2rem; }
+      .countdown-label { font-size: 0.6rem; }
+
+      /* Event grid — 1 col so images are big & tappable */
+      .container { grid-template-columns: 1fr; gap: 14px; }
+      .event::after { opacity: 0.85; } /* always show label on touch */
+
+      /* Touch‑friendly nav */
+      .nav a { padding: 8px 12px; min-height: 44px; display: flex; align-items: center; }
     }
   </style>
 </head>
@@ -592,10 +664,12 @@
           observer.unobserve(e.target);
         }
       });
-    }, { threshold: 0, rootMargin: '0px' });
+    }, { threshold: 0, rootMargin: '40px 0px 0px 0px' });
 
     document.querySelectorAll('.reveal').forEach((el, i) => {
-      el.style.transitionDelay = `${Math.min(i * 0.05, 0.4)}s`;
+      /* Cancel the CSS fallback animation now that JS is running */
+      el.style.animation = 'none';
+      el.style.transitionDelay = `${Math.min(i * 0.06, 0.45)}s`;
       observer.observe(el);
     });
 
