@@ -653,67 +653,84 @@
 
   <script>
     /* ── STARS ── */
-    const starsEl = document.getElementById('stars');
-    for (let i = 0; i < 90; i++) {
-      const s = document.createElement('div');
-      s.className = 'star';
-      s.style.cssText = `
-        left:${Math.random()*100}%;
-        top:${Math.random()*100}%;
-        --dur:${3 + Math.random()*5}s;
-        --delay:${Math.random()*6}s;
-        --op:${0.3 + Math.random()*0.6};
-        width:${1 + Math.random()*2.5}px;
-        height:${1 + Math.random()*2.5}px;
-      `;
-      starsEl.appendChild(s);
-    }
+    try {
+      const starsEl = document.getElementById('stars');
+      if (starsEl) {
+        for (let i = 0; i < 90; i++) {
+          const s = document.createElement('div');
+          s.className = 'star';
+          s.style.cssText = `
+            left:${Math.random()*100}%;
+            top:${Math.random()*100}%;
+            --dur:${3 + Math.random()*5}s;
+            --delay:${Math.random()*6}s;
+            --op:${0.3 + Math.random()*0.6};
+            width:${1 + Math.random()*2.5}px;
+            height:${1 + Math.random()*2.5}px;
+          `;
+          starsEl.appendChild(s);
+        }
+      }
+    } catch(err) { console.error('Stars error:', err); }
+  </script>
 
+  <script>
     /* ── SCROLL-REVEAL ── */
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(e => {
-        if (e.isIntersecting) {
-          e.target.classList.add('visible');
-          observer.unobserve(e.target);
+    try {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(e => {
+          if (e.isIntersecting) {
+            e.target.classList.add('visible');
+            observer.unobserve(e.target);
+          }
+        });
+      }, { threshold: 0, rootMargin: '40px 0px 0px 0px' });
+
+      document.querySelectorAll('.reveal').forEach((el, i) => {
+        el.style.animation = 'none';
+        el.style.transitionDelay = `${Math.min(i * 0.06, 0.45)}s`;
+        const rect = el.getBoundingClientRect();
+        if (rect.top < window.innerHeight + 40) {
+          el.classList.add('visible');
+        } else {
+          observer.observe(el);
         }
       });
-    }, { threshold: 0, rootMargin: '40px 0px 0px 0px' });
+    } catch(err) { console.error('Reveal error:', err); }
+  </script>
 
-    document.querySelectorAll('.reveal').forEach((el, i) => {
-      el.style.animation = 'none';
-      el.style.transitionDelay = `${Math.min(i * 0.06, 0.45)}s`;
-      /* If already in viewport on load, make visible immediately */
-      const rect = el.getBoundingClientRect();
-      if (rect.top < window.innerHeight + 40) {
-        el.classList.add('visible');
-      } else {
-        observer.observe(el);
-      }
-    });
-
+  <script>
     /* ── COUNTDOWN ── */
-    // Set your event date here (YYYY, MM-1, DD, HH, MM)
-    const EVENT_DATE = new Date(2026, 3, 23, 9, 0, 0); // April 23 2026, 9 AM
+    try {
+      // Set your event date here (YYYY, MM-1, DD, HH, MM)
+      const EVENT_DATE = new Date(2026, 3, 23, 9, 0, 0); // April 23 2026, 9 AM
 
-    function updateCountdown() {
-      const now = new Date();
-      const diff = EVENT_DATE - now;
-      if (diff <= 0) {
-        document.getElementById('countdown').innerHTML =
-          '<span class="event-ended">✦ The Magic Has Begun ✦</span>';
-        return;
+      function updateCountdown() {
+        const now = new Date();
+        const diff = EVENT_DATE - now;
+        if (diff <= 0) {
+           const cd = document.getElementById('countdown');
+           if (cd) cd.innerHTML = '<span class="event-ended">✦ The Magic Has Begun ✦</span>';
+           return;
+        }
+        const d = Math.floor(diff / 86400000);
+        const h = Math.floor((diff % 86400000) / 3600000);
+        const m = Math.floor((diff % 3600000) / 60000);
+        const s = Math.floor((diff % 60000) / 1000);
+        
+        const elD = document.getElementById('cd-d');
+        const elH = document.getElementById('cd-h');
+        const elM = document.getElementById('cd-m');
+        const elS = document.getElementById('cd-s');
+        
+        if (elD) elD.textContent = String(d).padStart(2,'0');
+        if (elH) elH.textContent = String(h).padStart(2,'0');
+        if (elM) elM.textContent = String(m).padStart(2,'0');
+        if (elS) elS.textContent = String(s).padStart(2,'0');
       }
-      const d = Math.floor(diff / 86400000);
-      const h = Math.floor((diff % 86400000) / 3600000);
-      const m = Math.floor((diff % 3600000) / 60000);
-      const s = Math.floor((diff % 60000) / 1000);
-      document.getElementById('cd-d').textContent = String(d).padStart(2,'0');
-      document.getElementById('cd-h').textContent = String(h).padStart(2,'0');
-      document.getElementById('cd-m').textContent = String(m).padStart(2,'0');
-      document.getElementById('cd-s').textContent = String(s).padStart(2,'0');
-    }
-    updateCountdown();
-    setInterval(updateCountdown, 1000);
+      updateCountdown();
+      setInterval(updateCountdown, 1000);
+    } catch(err) { console.error('Countdown error:', err); }
   </script>
 
 </body>
