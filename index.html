@@ -184,74 +184,6 @@
       text-transform: uppercase;
     }
 
-    /* ─── COUNTDOWN ─── */
-    .countdown-wrapper {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 10px;
-    }
-    .countdown-label {
-      font-family: 'Cinzel', serif;
-      font-size: 0.68rem;
-      letter-spacing: 0.28em;
-      color: var(--gold);
-      text-transform: uppercase;
-      opacity: 0.8;
-    }
-    .countdown {
-      display: flex;
-      gap: 12px;
-    }
-    @keyframes cdFloat {
-      0%, 100% { transform: translateY(0px); }
-      50%       { transform: translateY(-6px); }
-    }
-    @keyframes cdGlow {
-      0%, 100% { text-shadow: 0 0 8px rgba(201, 168, 76, 0.3); }
-      50%       { text-shadow: 0 0 22px rgba(201, 168, 76, 0.85), 0 0 40px rgba(201, 168, 76, 0.3); }
-    }
-    .cd-block {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      background: var(--card-bg);
-      border: 1px solid rgba(201, 168, 76, 0.22);
-      border-radius: 10px;
-      padding: 12px 18px 8px;
-      min-width: 64px;
-      backdrop-filter: blur(8px);
-      animation: cdFloat 3s ease-in-out infinite;
-    }
-    .cd-block:nth-child(2) { animation-delay: 0.4s; }
-    .cd-block:nth-child(3) { animation-delay: 0.8s; }
-    .cd-block:nth-child(4) { animation-delay: 1.2s; }
-    .cd-num {
-      font-family: 'Cinzel', serif;
-      font-size: 1.6rem;
-      font-weight: 700;
-      color: var(--gold-light);
-      line-height: 1;
-      animation: cdGlow 3s ease-in-out infinite;
-    }
-    .cd-block:nth-child(2) .cd-num { animation-delay: 0.4s; }
-    .cd-block:nth-child(3) .cd-num { animation-delay: 0.8s; }
-    .cd-block:nth-child(4) .cd-num { animation-delay: 1.2s; }
-    .cd-unit {
-      font-family: 'Lato', sans-serif;
-      font-size: 0.58rem;
-      letter-spacing: 0.18em;
-      color: var(--gold);
-      text-transform: uppercase;
-      margin-top: 4px;
-      opacity: 0.75;
-    }
-    .event-ended {
-      font-family: 'Cinzel', serif;
-      font-size: 0.95rem;
-      color: var(--gold);
-      letter-spacing: 0.1em;
-    }
 
     /* ─── DIVIDER ─── */
     .divider {
@@ -489,11 +421,6 @@
       .hero-subtitle { font-size: 0.85rem; letter-spacing: 0.22em; }
       .hero-college  { font-size: 0.7rem; }
 
-      /* Countdown */
-      .countdown { gap: 10px; }
-      .cd-block { min-width: 60px; padding: 10px 14px 8px; border-radius: 8px; }
-      .cd-num  { font-size: 1.4rem; }
-      .cd-unit { font-size: 0.55rem; }
 
       /* Section titles */
       .section-title { font-size: 1.1rem; letter-spacing: 0.12em; }
@@ -516,11 +443,6 @@
       .header img { width: 200px; }
       .hero-subtitle { font-size: 0.75rem; }
 
-      /* Countdown — compact */
-      .countdown { gap: 7px; }
-      .cd-block { min-width: 54px; padding: 9px 10px 7px; }
-      .cd-num  { font-size: 1.2rem; }
-      .countdown-label { font-size: 0.6rem; }
 
       /* Event grid — 1 col so images are big & tappable */
       .container { grid-template-columns: 1fr; gap: 14px; }
@@ -558,16 +480,6 @@
       <div class="hero-college">DSATM Bangalore</div>
     </div>
 
-    <!-- COUNTDOWN -->
-    <div class="countdown-wrapper reveal" id="countdown-section">
-      <div class="countdown-label">Event Countdown</div>
-      <div class="countdown" id="countdown">
-        <div class="cd-block"><span class="cd-num" id="cd-d">--</span><span class="cd-unit">Days</span></div>
-        <div class="cd-block"><span class="cd-num" id="cd-h">--</span><span class="cd-unit">Hours</span></div>
-        <div class="cd-block"><span class="cd-num" id="cd-m">--</span><span class="cd-unit">Mins</span></div>
-        <div class="cd-block"><span class="cd-num" id="cd-s">--</span><span class="cd-unit">Secs</span></div>
-      </div>
-    </div>
 
     <div class="divider-ornament reveal">
       <div class="divider"></div>
@@ -699,39 +611,6 @@
     } catch(err) { console.error('Reveal error:', err); }
   </script>
 
-  <script>
-    /* ── COUNTDOWN ── */
-    try {
-      // Set your event date here (YYYY, MM-1, DD, HH, MM)
-      const EVENT_DATE = new Date(2026, 3, 23, 9, 0, 0); // April 23 2026, 9 AM
-
-      function updateCountdown() {
-        const now = new Date();
-        const diff = EVENT_DATE - now;
-        if (diff <= 0) {
-           const cd = document.getElementById('countdown');
-           if (cd) cd.innerHTML = '<span class="event-ended">✦ The Magic Has Begun ✦</span>';
-           return;
-        }
-        const d = Math.floor(diff / 86400000);
-        const h = Math.floor((diff % 86400000) / 3600000);
-        const m = Math.floor((diff % 3600000) / 60000);
-        const s = Math.floor((diff % 60000) / 1000);
-        
-        const elD = document.getElementById('cd-d');
-        const elH = document.getElementById('cd-h');
-        const elM = document.getElementById('cd-m');
-        const elS = document.getElementById('cd-s');
-        
-        if (elD) elD.textContent = String(d).padStart(2,'0');
-        if (elH) elH.textContent = String(h).padStart(2,'0');
-        if (elM) elM.textContent = String(m).padStart(2,'0');
-        if (elS) elS.textContent = String(s).padStart(2,'0');
-      }
-      updateCountdown();
-      setInterval(updateCountdown, 1000);
-    } catch(err) { console.error('Countdown error:', err); }
-  </script>
 
 </body>
 </html>
