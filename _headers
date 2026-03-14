@@ -1,0 +1,26 @@
+# ── Cloudflare Pages HTTP Response Headers ──────────────────────────────────
+# Applied to every response served from this site.
+
+# Default: all pages
+/*
+  X-Frame-Options: DENY
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=()
+  Content-Security-Policy: default-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; frame-src 'none'; object-src 'none'; base-uri 'self'; form-action 'none';
+  X-DNS-Prefetch-Control: on
+  Strict-Transport-Security: max-age=63072000; includeSubDomains; preload
+
+# Cache images aggressively (content-hashed filenames not needed for static site)
+/*.png
+  Cache-Control: public, max-age=604800, stale-while-revalidate=86400
+
+/bg.png
+  Cache-Control: public, max-age=604800, stale-while-revalidate=86400
+
+# Cache HTML with short TTL so updates propagate quickly
+/*.html
+  Cache-Control: public, max-age=300, must-revalidate
+
+/
+  Cache-Control: public, max-age=300, must-revalidate

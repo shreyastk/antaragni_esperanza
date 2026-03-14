@@ -1,0 +1,6 @@
+# ── Cloudflare Pages Redirects ───────────────────────────────────────────────
+# Redirect old draft page so existing links still work
+/Esperanza.html   /   301
+/Esperanza        /   301
+/esperanza.html   /   301
+/esperanza        /   301

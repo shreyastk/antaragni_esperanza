@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>404 — Page Not Found | Esperanza Hogwarts Edition</title>
+  <meta name="robots" content="noindex">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Lato:wght@300;400&display=swap"
+    rel="stylesheet">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --gold: #c9a84c;
+      --gold-light: #e8c97a;
+      --cream: #f5edd6;
+      --dark: #120a1f;
+    }
+
+    body {
+      font-family: 'Lato', sans-serif;
+      background: url("bg.png") no-repeat center center fixed;
+      background-size: cover;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 40px 20px;
+      position: relative;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background: linear-gradient(160deg,
+          rgba(10, 4, 22, 0.82) 0%,
+          rgba(30, 10, 50, 0.72) 50%,
+          rgba(10, 4, 22, 0.88) 100%);
+      z-index: 0;
+    }
+
+    .content {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+      max-width: 480px;
+    }
+
+    .logo {
+      width: 220px;
+      max-width: 80%;
+      filter: drop-shadow(0 4px 24px rgba(201, 168, 76, 0.45));
+      animation: floatLogo 4s ease-in-out infinite;
+    }
+
+    @keyframes floatLogo {
+      0%, 100% { transform: translateY(0); }
+      50%       { transform: translateY(-8px); }
+    }
+
+    .divider {
+      width: 100%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+      opacity: 0.4;
+    }
+
+    h1 {
+      font-family: 'Cinzel', serif;
+      font-size: 4rem;
+      color: var(--gold);
+      letter-spacing: 0.1em;
+      line-height: 1;
+    }
+
+    p {
+      font-family: 'Cinzel', serif;
+      font-size: 0.85rem;
+      letter-spacing: 0.2em;
+      color: var(--gold-light);
+      opacity: 0.8;
+      text-transform: uppercase;
+    }
+
+    a.home-btn {
+      display: inline-block;
+      margin-top: 8px;
+      padding: 12px 32px;
+      border: 1px solid rgba(201, 168, 76, 0.5);
+      border-radius: 8px;
+      font-family: 'Cinzel', serif;
+      font-size: 0.78rem;
+      letter-spacing: 0.2em;
+      color: var(--gold-light);
+      text-decoration: none;
+      text-transform: uppercase;
+      transition: background 0.3s ease, border-color 0.3s ease;
+    }
+
+    a.home-btn:hover {
+      background: rgba(201, 168, 76, 0.12);
+      border-color: rgba(201, 168, 76, 0.9);
+    }
+  </style>
+</head>
+
+<body>
+  <div class="content">
+    <img class="logo" src="esperanza.png" alt="Esperanza – Hogwarts Edition">
+    <div class="divider"></div>
+    <h1>404</h1>
+    <p>This page does not exist</p>
+    <a href="/" class="home-btn">← Return Home</a>
+  </div>
+</body>
+
+</html>
